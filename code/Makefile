@@ -12,6 +12,7 @@ $(TARGET): $(SRC)
 .PHONY: run
 run: build
 	@echo "Starting local server on port 8000"
+	xdg-open "http://localhost:8000"
 	python3 -m http.server 8000
 
 .PHONY: clean

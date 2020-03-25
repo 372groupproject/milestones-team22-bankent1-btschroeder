@@ -1,0 +1,5 @@
+1. Book: 
+2. Website: https://developer.mozilla.org/en-US/docs/WebAssembly/Understanding_the_text_format
+3. Manuel: https://webassembly.org/
+4. Community: https://lists.w3.org/Archives/Public/public-webassembly/
+5. Major Project:

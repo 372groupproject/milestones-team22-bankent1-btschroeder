@@ -23,6 +23,8 @@ fetch('m1.wasm').then(response =>
     response.arrayBuffer()
 ).then(buffer =>
     WebAssembly.instantiate(buffer, importObject)
-).then(({module, instance}) =>
-    instance.exports.hello()
+).then(({module, instance}) => {
+    instance.exports.hello();
+    console.log(instance.exports.add32(1234,4321));
+  }  
 );

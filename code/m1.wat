@@ -12,7 +12,7 @@
     )
 
     ;; hello function
-    (func $hello (export "hello")
+    (func $hello 
         i32.const 0 
         call $len
         call $logstr
@@ -20,5 +20,15 @@
         call $len
         call $logstr
     )
+
+    ;; add32 function
+    (func $add32 (param i32) (param i32) (result i32) 
+      local.get 0
+      local.get 1
+      i32.add
+    )
+
+    (export "hello" (func $hello))
+    (export "add32" (func $add32))
 )
 

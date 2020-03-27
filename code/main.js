@@ -19,7 +19,10 @@ var importObject = {
   }
 };
 
+let f = fetch('m1.wasm');
+
 WebAssembly.instantiateStreaming(fetch('m1.wasm'), importObject)
  .then(obj => {
     obj.instance.exports.hello();
-  });
+  })
+ .catch(obj => console.log(obj));

@@ -1,20 +1,23 @@
 WSMC = wat2wasm
 
 SRC = $(wildcard *.wat)
-TARGET = ${SRC:.wat=.wasm}
+WSM = ${SRC:.wat=.wasm}
+
+.PHONY: all
+all: $(WSM)
 
 .PHONY: build
-build: $(TARGET)
+build: $(WSM)
 
-$(TARGET): $(SRC)
-	$(WSMC) $(SRC)
+%.wasm: %.wat
+	$(WSMC) $^
 
 .PHONY: run
-run: build
+run: all
 	@echo "Starting local server on port 8000"
 	$(shell if which xdg-open > /dev/null; then xdg-open "http://localhost:8000"; fi)
 	python3 -m http.server 8000
 
 .PHONY: clean
 clean:
-	rm -f $(TARGET)
+	rm -f $(WSM)

@@ -1,6 +1,6 @@
 (module
-    (import "console" "log" (func $log (param i32)))
-    (import "console" "logstr" (func $logstr (param i32) (param i32)))
+    (import "console" "nprint" (func $nprint (param i32)))
+    (import "console" "sprint" (func $sprint (param i32) (param i32)))
 
     ;; import 1 page of mem from the js env
     (import "js" "mem" (memory 1))
@@ -15,10 +15,10 @@
     (func $hello 
         i32.const 0 
         call $len
-        call $logstr
+        call $sprint
         i32.const 16 
         call $len
-        call $logstr
+        call $sprint
     )
 
     ;; add32 function

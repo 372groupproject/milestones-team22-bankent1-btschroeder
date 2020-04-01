@@ -4,30 +4,47 @@
     </head>
     
     <body>
-        <form id="cli">
-            <input id="line" type="text">
+        <form id="cli" autocomplete="off">
+            <select id="fsel">
+                <option value="hello">hello</option>
+                <option value="add32">add32</option>
+            </select>
+            <input id="input" type="text" size="79">
         </form>
+
+        <textarea id="output" rows="35" cols="80"></textarea>
         
     </body>
-    <script src="main.js"></script>
+    
 
-    <!-- <script>
+    <script>
+    //map names to wasm functions
+    let funcs = {};
+    let line = ""; //output line buffer
+
     let cli = document.querySelector("#cli");
-    let line = document.querySelector("#line");
+    let fsel = document.querySelector("#fsel");
+    let input = document.querySelector("#input");
+    let output = document.querySelector("#output");
 
     cli.onsubmit = () => {
-        process(line.value);
-        line.value = "";
+        process(input.value);
+        input.value = "";
         return false; //don't refresh
     }
 
     function process(text) {
-        console.log(text);
-
-        //call all the funs to do with text
-
+        //split text into params on single space
+        let args = text.split(' ');
+        //call selected function on args
+        let retval = funcs[fsel.value].apply(null, args);
+        if (line != "") output.value = line + '\n' + output.value;
+        if (retval != undefined) output.value = retval + '\n' + output.value;
+        line = ""; //clear line buffer
     }
     
-    </script> -->
+    </script>
+
+    <script src="main.js"></script>
 
 </html>

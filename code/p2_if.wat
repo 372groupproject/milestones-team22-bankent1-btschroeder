@@ -1,35 +1,38 @@
 (module
-    (import "console" "log" (func $log (param i32)))
-    (import "console" "logstr" (func $logstr (param i32) (param i32)))
+    (import "console" "nprint" (func $nprint (param i32)))
+    (import "console" "sprint" (func $sprint (param i32) (param i32)))
 
     ;; import 1 page of mem from the js env
     (import "js" "mem" (memory 1))
-    (data (i32.const 0) "EVEN\00")
-    (data (i32.const 6) "ODD\00")
+    (data (i32.const 0) " is EVEN\00")
+    (data (i32.const 10) " is ODD\00")
 
-    (func $even (param $n1 i32) (result i32)
+    (func $odd (param $n1 i32) (result i32)
+        ;; check 0th bit
         (i32.and
             (local.get $n1)
             (i32.const 1)
         )
     )
 
-    (func $print_parity (param $n1 i32) (local $e i32)
+    (func $print_parity (param $n1 i32) (local $x i32)
+        local.get $n1
+        call $nprint
         ;; if even, print even, else print odd
         local.get $n1
-        call $even
-        local.set $e
+        call $odd
+        local.set $x
         (if
-            (i32.eq (local.get $e) (i32.const 0))
+            (i32.eq (local.get $x) (i32.const 0))
             (then
                 i32.const 0
-                i32.const 4
-                call $logstr
+                i32.const 8
+                call $sprint
             )
             (else
-                i32.const 6
-                i32.const 3
-                call $logstr
+                i32.const 10
+                i32.const 7
+                call $sprint
             )
         )
     )

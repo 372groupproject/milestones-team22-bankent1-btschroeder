@@ -1,5 +1,5 @@
 // USE THIS FILE AS THE LAUNCH POINT
-// const filepath = "./m1.wasm"
+const filepath = "./p2_if.wasm"
  
 var memory = new WebAssembly.Memory({initial:1});
 // js functions to be imported in wasm
@@ -19,12 +19,11 @@ var importObject = {
   }
 };
 
-fetch('m1.wasm').then(response =>
+fetch(filepath).then(response =>
     response.arrayBuffer()
 ).then(buffer =>
     WebAssembly.instantiate(buffer, importObject)
 ).then(({module, instance}) => {
-    instance.exports.hello();
-    console.log(instance.exports.add32(1234,4321));
+    instance.exports.print_parity(2);
   }  
 );

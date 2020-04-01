@@ -7,10 +7,10 @@ WSM = ${SRC:.wat=.wasm}
 all: $(WSM)
 
 .PHONY: build
-build: $(WSM)
+build: all
 
 %.wasm: %.wat
-	$(WSMC) $^
+	$(WSMC) $<
 
 .PHONY: run
 run: all

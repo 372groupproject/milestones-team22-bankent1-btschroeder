@@ -1,9 +1,9 @@
 (module
-    (import "console" "nprint" (func $nprint (param i32)))
-    (import "console" "sprint" (func $sprint (param i32) (param i32)))
+    (import "terminal" "nprint" (func $nprint (param i32)))
+    (import "terminal" "sprint" (func $sprint (param i32) (param i32)))
 
-    ;; import 1 page of mem from the js env
-    (import "js" "mem" (memory 1))
+    ;; import 1 page of mem from the terminal
+    (import "terminal" "mem" (memory 1))
     (data (i32.const 0) " is EVEN\00")
     (data (i32.const 10) " is ODD\00")
 

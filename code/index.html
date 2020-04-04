@@ -7,6 +7,7 @@
         <form id="cli" autocomplete="off">
             <select id="fsel">
                 <option value="print_parity">print_parity</option>
+                <option value="br_table_ex">br_table_ex</option>
                 <!-- <option value="add32">add32</option> -->
             </select>
             <input id="input" type="text" size="79">
@@ -18,14 +19,13 @@
     
 
     <script>
-    //map names to wasm functions
-    let funcs = {};
-    let line = ""; //output line buffer
-
+    
     let cli = document.querySelector("#cli");
     let fsel = document.querySelector("#fsel");
     let input = document.querySelector("#input");
     let output = document.querySelector("#output");
+
+    let line = "" //empty linebuffer
 
     cli.onsubmit = () => {
         process(input.value);
@@ -38,13 +38,13 @@
         let args = text.split(' ');
         //call selected function on args
         let retval = funcs[fsel.value].apply(null, args);
-        if (line != "") output.value = line + '\n' + output.value;
-        if (retval != undefined) output.value = retval + '\n' + output.value;
-        line = ""; //clear line buffer
+        if (line) output.value = '\n' + line + output.value;
+        if (retval != undefined) output.value = '\n' + 'Returned: ' + retval + output.value;
+        line = "";
     }
     
     </script>
 
-    <script src="main.js"></script>
+    <script src="spasm.js"></script>
 
 </html>

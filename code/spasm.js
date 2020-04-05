@@ -19,7 +19,7 @@ Notes for later:
 */
 
 //load these guys from the server
-const filepaths = ["./p2_if.wasm", "./p2_br_table.wasm"]
+const filepaths = ["./p2_if.wasm", "./p2_br_table.wasm", "./p2_loop.wasm"]
 
 //wasm functions we can call
 let funcs = {}

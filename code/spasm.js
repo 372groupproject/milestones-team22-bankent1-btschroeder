@@ -19,7 +19,7 @@ Notes for later:
 */
 
 //load these guys from the server
-const filepaths = ["./p2_if.wasm", "./p2_br_table.wasm", "./p2_loop.wasm", "./p3_i32.wasm"]
+const filepaths = ["./p2_if.wasm", "./p2_br_table.wasm", "./p2_loop.wasm", "./p3_i32.wasm", "./p3_f32.wasm"]
 
 //wasm functions we can call
 let funcs = {}
@@ -37,6 +37,10 @@ class Terminal {
 
   nprint (arg) {
     line += arg
+  }
+
+  ln () {
+    line += '\n';
   }
 
 }

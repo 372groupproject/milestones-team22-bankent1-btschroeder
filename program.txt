@@ -1,0 +1,10 @@
+1. Our program will implement a simple 2D graphing calculator which will be able to graph simple
+   functions
+2. We expect the program to have multiple functions inside the same file (most likely one per 
+   math function)
+3. We expect the program to be approximately 200-300 lines of code
+4. We think this will be a good illustration of the features because it will require use of all
+   of the types and most of the control structures
+
+
+Note: Because of the nature of wasm, we will have to implement the front-end stuff in js/css/html

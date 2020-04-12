@@ -11,6 +11,8 @@
                 <option value="sum_digits">sum_digits</option>
                 <option value="i32_feature">i32_feature</option>
                 <option value="f32_feature">f32_feature</option>
+                <option value="f64_feature">f64_feature</option>
+                <option value="average">average</option>
                 <!-- <option value="add32">add32</option> -->
             </select>
             <input id="input" type="text" size="79">
@@ -39,11 +41,26 @@
     function process(text) {
         //split text into params on single space
         let args = text.split(' ');
+
+        //function with input memory case
+        if (fsel.value == "average") {
+            args = [setinputs(funcs["inputs"].buffer, args)];
+        }
+
         //call selected function on args
         let retval = funcs[fsel.value].apply(null, args);
         if (line) output.value = '\n' + line + output.value;
         if (retval != undefined) output.value = '\n' + 'Returned: ' + retval + output.value;
         line = "";
+    }
+
+    function setinputs(buffer, inputs) {
+        let arr = new Int32Array(buffer)
+        inputs.forEach((input, idx) => {
+            arr[idx] = input;
+            //dv.setInt32(idx*4, input, false); //little endian for wasm
+        });
+        return inputs.length;
     }
     
     </script>

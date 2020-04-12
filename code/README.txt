@@ -6,3 +6,6 @@ Run with 'make run' then navigate to localhost:8000 in your browser. You may nee
 Choose the function you would like to run from the drop down menu. Once the function is chosen, type in some arguments into the top text box and hit enter to run the function.
 
 Try to compile p3_compile_err.wat.bad with wat2wasm, you should get a compile time error.
+
+Notes on Milestone 3:
+Javascript does not currently support wasm's i64 so in theory the p3_i64.wasm should work, but it instead throws an error.

@@ -1,6 +1,4 @@
 (module
-    (import "terminal" "nprint" (func $nprint (param i32)))
-    (import "terminal" "ln" (func $ln))
     (memory (export "inputs") 1)
 
     (func (export "average") (param $nums i32) (result f64) (local $sum i32) (local $idx i32) (local $num i32) (local $total i32)

@@ -1,0 +1,7 @@
+What we will do in our video:
+	* Use a powerpoint to go over the basics of wasm
+	* Demo our project
+	* Go into the details of how wasm and js work together
+	* In our powerpoint we will show some examples of the different features of 
+	  the language
+	* We will shoot it by recording our screen and voices

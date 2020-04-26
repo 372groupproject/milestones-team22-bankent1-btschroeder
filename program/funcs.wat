@@ -2,8 +2,8 @@
   ;; imports
   (import "terminal" "mem" (memory 1))
 
-  (func $pow (local $res i32) (param $a i32) (param $b i32) (result i32)
-    i32.const 1
+  (func $pow (param $a f64) (param $b i32) (result f64) (local $res f64)
+    f64.const 1.0
     local.set $res
     (block
       (loop
@@ -12,11 +12,11 @@
         i32.eqz
         br_if 1 ;; break
 
-        i32.mul (local.get $a) (local.get $res)
+        (f64.mul (local.get $a) (local.get $res))
         local.set $res
 
         ;; b--
-        i32.sub (local.get $b) (i32.const 1)
+        (i32.sub (local.get $b) (i32.const 1))
         local.set $b
 
         br 0 ;; go to start of loop
@@ -26,9 +26,9 @@
     local.get $res
   )
 
-  (func (export "poly") (local $res i32) (param $coef_list i32) (param $size i32) (param $x i32) (result i32)
+  (func (export "poly") (param $coef_list i32) (param $size i32) (param $x f64) (result f64) (local $res f64)
     ;; TODO use coeficiant list with size of list to return res
-    i32.const 0
+    f64.const 0.0
     local.set $res
     (block
       (loop
@@ -42,13 +42,13 @@
         local.get $size
         call $pow
         ;; coef_list[4*$size]
-        i32.load (i32.add (local.get $coef_list) (i32.mul (i32.const 4) (local.get $size)))
-        i32.mul   ;; coef_list[4*$size] * x^$size
+        (f64.load (i32.add (local.get $coef_list) (i32.mul (i32.const 8) (local.get $size))))
+        f64.mul   ;; coef_list[4*$size] * x^$size
         local.get $res
-        i32.add   ;; add to sum
+        f64.add   ;; add to sum
 
         ;; size--
-        i32.sub (local.get $size) (i32.const 1)
+        (i32.sub (local.get $size) (i32.const 1))
         local.set $size
 
         br 0 ;; go to start of loop
@@ -57,4 +57,16 @@
     ;; return $res
     local.get $res
   )
+
+  (func (export "exp") (param $a f64) (param $x f64) (param $b i32) (param $c f64) (result f64)
+    ;; a*(x^b) + c
+    local.get $x
+    local.get $b
+    call $pow
+    local.get $a
+    f64.mul
+    local.get $c
+    f64.add
+  )
+
 )

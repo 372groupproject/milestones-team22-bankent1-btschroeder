@@ -12,6 +12,7 @@
         i32.eqz
         br_if 1 ;; break
 
+        ;; res = res * a
         (f64.mul (local.get $a) (local.get $res))
         local.set $res
 
@@ -26,30 +27,33 @@
     local.get $res
   )
 
-  (func (export "poly") (param $size i32) (param $x f64) (result f64) (local $res f64)
-    ;; TODO use coeficiant list with size of list to return res
+  (func (export "poly") (param $size i32) (param $x f64) (result f64)
+    (local $res f64)
+    (local $i i32)
+
+    i32.const 0
+    local.set $i
     f64.const 0.0
     local.set $res
     (block
       (loop
         ;; check break on size is zero 
-        local.get $size
-        i32.eqz
+        (i32.lt_s (local.get $i) (local.get $size))
         br_if 1 ;; break
 
         ;; call pow
         local.get $x
-        local.get $size
+        local.get $i
         call $pow
-        ;; coef_list[4*$size]
-        (f64.load (i32.mul (i32.const 8) (local.get $size)))
-        f64.mul   ;; coef_list[4*$size] * x^$size
+        ;; coef_list[4*$i]
+        (f64.load (i32.mul (i32.const 8) (local.get $i)))
+        f64.mul   ;; coef_list[4*$i] * x^$i
         local.get $res
         f64.add   ;; add to sum
 
-        ;; size--
-        (i32.sub (local.get $size) (i32.const 1))
-        local.set $size
+        ;; i++
+        (i32.add (local.get $i) (i32.const 1))
+        local.set $i
 
         br 0 ;; go to start of loop
       )

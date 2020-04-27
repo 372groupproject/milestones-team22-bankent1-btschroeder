@@ -26,7 +26,8 @@
     local.get $res
   )
 
-  (func (export "poly") (param $coef_list i32) (param $size i32) (param $x f64) (result f64) (local $res f64)
+  (func (export "poly") (param $size i32) (param $x f64) (result f64) (local $res f64)
+    ;; TODO use coeficiant list with size of list to return res
     f64.const 0.0
     local.set $res
     (block

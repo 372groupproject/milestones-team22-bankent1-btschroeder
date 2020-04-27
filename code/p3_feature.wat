@@ -18,7 +18,7 @@
                 local.set $sum ;;sum += num
 
                 (i32.add (local.get $idx) (i32.const 4)) ;;align with ints
-                local.set $idx ;;idx ++
+                local.set $idx ;;idx += 4
 
                 br 0 ;;back to start of loop
             )

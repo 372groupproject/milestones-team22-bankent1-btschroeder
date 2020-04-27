@@ -26,7 +26,7 @@
     local.get $res
   )
 
-  (func (export "poly") (param $coef_list i32) (param $size i32) (param $x f64) (result f64) (local $res f64)
+  (func (export "poly") (param $size i32) (param $x f64) (result f64) (local $res f64)
     ;; TODO use coeficiant list with size of list to return res
     f64.const 0.0
     local.set $res
@@ -42,7 +42,7 @@
         local.get $size
         call $pow
         ;; coef_list[4*$size]
-        (f64.load (i32.add (local.get $coef_list) (i32.mul (i32.const 8) (local.get $size))))
+        (f64.load (i32.mul (i32.const 8) (local.get $size)))
         f64.mul   ;; coef_list[4*$size] * x^$size
         local.get $res
         f64.add   ;; add to sum

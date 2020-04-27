@@ -10,8 +10,23 @@ const eqform = document.querySelector('#eq')
 const type = document.querySelector('#type')
 const expr = document.querySelector('#expr')
 
+const mem = new WebAssembly.Memory({initial:1})
+const funcs = {}
+
 eqform.onsubmit = () => {
-    console.log(parse(expr.value))
+    let terms = parse(expr.value, type.value)
+    console.log(terms)
+    
+    let coarr = new Float64Array(mem.buffer)
+
+    coarr.fill(0, 0, terms.length) //reset to zeroes
+    
+    Object.assign(coarr, terms) //assign coeffs
+
+    //graph function
+
+    plot(funcs.poly)
+    
     return false
 }
 
@@ -31,36 +46,35 @@ function add() {
 //parses expression string of type
 function parse (expression, type, sym) {
     return expression 
-    .split(/\s*\+\s*/)                      //split on '+' surrounded by space
-    .map((term) => term.split(/\s*x|X\s*/)) //split on variable symbol surrounded by space
-    .map(termobj(type))
-    .reduce(polynomial.liketerms, [])
-    .sort(polynomial.ascending)
+    .replace(/\s*\+\s*\-\s*/, '-')  //replace "  +    -  #" with "-#"
+    .replace(/\s*\-\s*/, '+-')      //replace "  -   #" with "+-#"
+    .split(/\s*\+\s*/)                      //split on '+' surrounded by 0 or more space
+    .map((term) => term.split(/\s*x|X\s*/)) //split on variable symbol surrounded by 0 or more space (or function sin(x))
+    .map(polynomial.terms)              //
+    .reduce(polynomial.liketerms, [])   //get polynomial expr in ascending order
 }
 
-function termobj(type) {
-    return (term) => {
-        return {
-            co: parseFloat(term[0]),
-            exp:    term.length <= 1 ? 0 :
-                    term[1] == "" ?    1 :
-                    parseInt(term[1].slice(1)) //lose the '^' symbol
-        }
-    }
-}
 
-//expr := [term,...]
-//term := {co: #, exp: #}
+//termstr := ["#", "^#"]
+//term := {co: #, exp: #]
+//expr := [#co, ...] where # is coeff for term of degree index
 const polynomial = {
-    liketerms: (expr, term) => { //combines term into expr using like-terms
-        //see if expr has like term
-        let liketerm = expr.find(liketerm => liketerm.exp == term.exp)
-        if (liketerm) liketerm.co += term.co
-        else expr.push(term)
-        return expr
+    terms: (termstr) => { //term
+        return {
+            co:     termstr[0] == "" ?  1:
+                    termstr[0] == "-"? -1:
+                    parseFloat(termstr[0] || 1),
+            exp:    termstr[1] == undefined ? 0 :
+                    termstr[1] == "" ?        1  :
+                    parseInt(termstr[1].slice(1)) //lose the '^' symbol
+        }
     },
 
-    ascending: (term1, term2) => { //orders terms in ascending degree
-        return term1.exp - term2.exp
-    } 
+    liketerms: (expr, term) => { //combines term into expr using like-terms
+        //see if expr has like term
+        let liketerm = expr[term.exp]
+        if (liketerm) expr[term.exp] += term.co
+        else expr[term.exp] = term.co
+        return expr
+    }
 }

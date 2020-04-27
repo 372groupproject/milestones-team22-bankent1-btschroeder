@@ -1,6 +1,6 @@
 (module
   ;; imports
-  (import "terminal" "mem" (memory 1))
+  (import "grapher" "mem" (memory 1))
 
   (func $pow (param $a f64) (param $b i32) (result f64) (local $res f64)
     f64.const 1.0

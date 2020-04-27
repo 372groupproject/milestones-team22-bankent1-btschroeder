@@ -120,7 +120,14 @@
     local.get $res
   )
 
-  (func (export "exp") (param $a f64) (param $x f64) (param $b f64) (result f64)
+  (func (export "exp") (param $size i32)  (param $x f64) (result f64)
+    (local $a f64)
+    (local $b f64)
+
+    (f64.load (i32.const 0))
+    local.set $a
+    (f64.load (i32.const 8))
+    local.set $b
     ;; a*(e^x) + b
     (f64.add
       (local.get $b)
@@ -188,7 +195,14 @@
     local.get $res
   )
 
-  (func (export "sin") (param $a f64) (param $x f64) (param $b f64) (result f64)
+  (func (export "sin") (param $size i32) (param $x f64) (result f64)
+    (local $a f64)
+    (local $b f64) 
+
+    (f64.load (i32.const 0))
+    local.set $a
+    (f64.load (i32.const 8))
+    local.set $b
     ;; a*sin(x) + b
     (f64.add
       (local.get $b)

@@ -54,12 +54,12 @@ function drawline(from, to) {
 
 //graph the plot of given function f
 //default bounds are window bounds
-function plot(f, step=1) {
+function plot(f, nterms, step=1) {
     ctx.linewidth = 1
     ctx.setLineDash([]) //solid line
 
     for (let x = xmin; x <= (xmax-step)/xscale; x += step) {
-        drawline(from(x*xscale, f(x)*yscale), to((x+step)*xscale, f(x+step)*yscale))
+        drawline(from(x*xscale, f(nterms, x)*yscale), to((x+step)*xscale, f(nterms, x+step)*yscale))
     }
 }
 

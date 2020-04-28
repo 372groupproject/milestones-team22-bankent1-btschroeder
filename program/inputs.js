@@ -25,7 +25,7 @@ eqform.onsubmit = () => {
 
     //graph function
 
-    plot(funcs.poly)
+    plot(funcs.poly, terms.length)
     
     return false
 }

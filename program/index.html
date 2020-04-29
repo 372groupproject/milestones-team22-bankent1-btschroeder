@@ -15,11 +15,28 @@
         <form id="eq" autocomplete="off">
             <select id="type">
                 <option value="poly">Polynomial</option>
+                <option value="exp">Exponential</option>
+                <option value="sin">Sinusoidal</option>
             </select>
-            <input id="expr" type="text">
-
+            <input id="expr" type="text"> <br>
+            <label id="format" for="expr">Format: [T_1 [&lt;+|-&gt; T_2 [...]]] where each T_i is of the form A[x[^n]] for a floating point A and positive integer n.</label>
         </form>
-        <canvas id="graph" width="500" height="400"></canvas>
+
+        <canvas id="graph" width="500" height="400"></canvas><br><br>
+
+        <form id="controls">
+        <label for="xmin">Xmin: </label>
+        <input id="xmin" type="number" value="">
+        <label for="xmax">Xmax: </label>
+        <input id="xmax" type="number" value=""> <br><br>
+
+        <label for="ymin">Ymin: </label>
+        <input id="ymin" type="number" value="">
+        <label for="ymax">Ymax: </label>
+        <input id="ymax" type="number" value="">
+        </form>
+
+
     </body>
 
     <script src="grapher.js"></script>

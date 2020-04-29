@@ -92,14 +92,14 @@
 
   ;; 1 + x/1 + x^2/2! + ...
   (func $tay_exp (param $x f64) (result f64) (local $i i32) (local $res f64)
-    call $taylor_iterations
+    i32.const 0
     local.set $i
     f64.const 0
     local.set $res
     (block
       (loop
-        ;; break if i == 0
-        (i32.le_s (local.get $i) (i32.const 0))
+        ;; break if i >= tay_iters
+        (i32.ge_s (local.get $i) (call $taylor_iterations))
         br_if 1
 
         ;; res += x^i / i!
@@ -112,8 +112,8 @@
         )
         local.set $res
 
-        ;; i--
-        (i32.sub (local.get $i) (i32.const 1))
+        ;; i++
+        (i32.add (local.get $i) (i32.const 1))
         local.set $i
 
         br 0 ;; loop
@@ -157,9 +157,16 @@
         br_if 1
 
         ;; if i % 2 == 0, then loop (skip even i's)
-        (i32.rem_s (local.get $i) (i32.const 2))
-        i32.eqz
-        br_if 0
+        (if
+          (i32.eqz (i32.rem_s (local.get $i) (i32.const 2)))
+          (then
+            ;; i++
+            (i32.add (local.get $i) (i32.const 1))
+            local.set $i
+            br 0
+          )
+        )
+        
 
         ;; make every other odd power a negative
         (if

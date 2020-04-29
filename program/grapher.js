@@ -54,7 +54,7 @@ function drawline(from, to) {
 
 //graph the plot of given function f
 //default bounds are window bounds
-function plot(f, nterms, step=1) {
+function plot(f, nterms, step=0.1) {
     ctx.linewidth = 1
     ctx.setLineDash([]) //solid line
 

@@ -11,6 +11,7 @@ const type = document.querySelector('#type')
 const expr = document.querySelector('#expr')
 
 const mem = new WebAssembly.Memory({initial:1})
+const nprint = (n) => console.log(n);
 const funcs = {}
 
 eqform.onsubmit = () => {

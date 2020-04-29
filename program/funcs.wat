@@ -1,6 +1,7 @@
 (module
   ;; imports
   (import "grapher" "mem" (memory 1))
+  (import "grapher" "nprint" (func $nprint (param f64)))
 
   (func $pow (param $a f64) (param $b i32) (result f64) (local $res f64)
     f64.const 1.0
@@ -35,21 +36,22 @@
     local.set $i
     f64.const 0.0
     local.set $res
+    ;; (call $nprint (local.get $res))
     (block
       (loop
-        ;; check break on size is zero 
-        (i32.lt_s (local.get $i) (local.get $size))
+        ;; check break on i >= size
+        (i32.ge_s (local.get $i) (local.get $size))
         br_if 1 ;; break
 
-        ;; call pow
-        local.get $x
-        local.get $i
-        call $pow
-        ;; coef_list[4*$i]
-        (f64.load (i32.mul (i32.const 8) (local.get $i)))
-        f64.mul   ;; coef_list[4*$i] * x^$i
-        local.get $res
-        f64.add   ;; add to sum
+        ;; res += c_i*x^i
+        (f64.add
+          (local.get $res)
+          (f64.mul
+            (call $pow (local.get $x) (local.get $i))
+            (f64.load (i32.mul (i32.const 8) (local.get $i)))
+          )
+        )
+        local.set $res
 
         ;; i++
         (i32.add (local.get $i) (i32.const 1))
